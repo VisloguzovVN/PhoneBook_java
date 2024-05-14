@@ -1,0 +1,28 @@
+import java.util.*;
+
+public class PhoneDirectory {
+    public static void main(String[] args) {
+        HashMap<String, HashSet<String>> phoneBook = new HashMap<>();
+        
+        // Добавляем данные в телефонный справочник
+        addContact(phoneBook, "Иванов Петр Сидорович", "322223");
+        addContact(phoneBook, "Петров Сидор Иванович", "223322");
+        addContact(phoneBook, "Сидоров Иван Петрович", "333333");
+        addContact(phoneBook, "Иванов Петр Сидорович", "443444");
+        
+        // Выводим телефонный справочник
+        System.out.println("Телефонный справочник:");
+        phoneBook.entrySet()
+                 .stream()
+                 .sorted((e1, e2) -> Integer.compare(e2.getValue().size(), e1.getValue().size()))
+                 .forEach(entry -> {
+                     System.out.println(entry.getKey() + ": " + entry.getValue());
+                 });
+    }
+
+    public static void addContact(HashMap<String, HashSet<String>> phoneBook, String name, String phone) {
+        HashSet<String> phones = phoneBook.getOrDefault(name, new HashSet<>());
+        phones.add(phone);
+        phoneBook.put(name, phones);
+    }
+}
